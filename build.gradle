@@ -2,6 +2,10 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.2'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.diffplug.spotless' version '6.25.0'
+	id 'com.github.spotbugs' version '6.0.12'
+	id 'jacoco'
+	id 'pmd'
 }
 
 group = 'com.example'
@@ -26,10 +30,19 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+
 	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'com.github.spotbugs:spotbugs-annotations:4.8.4'
+	compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+	compileOnly 'org.projectlombok:lombok'
+
 	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	runtimeOnly 'io.r2dbc:r2dbc-mssql:1.0.0.RELEASE'
+
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -38,3 +51,6 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+apply from: "$rootDir/gradle/code-checks-setup.gradle"
+apply from: "$rootDir/gradle/jacoco.gradle"

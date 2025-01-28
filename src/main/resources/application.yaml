@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: online-event-management-system-api
